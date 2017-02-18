@@ -2,5 +2,15 @@
   "db": {
     "name": "db",
     "connector": "memory"
+  },
+  "mongo-server": {
+    "host": "127.0.0.1",
+    "port": 29000,
+    "url": "",
+    "database": "appdb",
+    "password": "lala1234",
+    "name": "mongo-server",
+    "user": "appAdmin",
+    "connector": "mongodb"
   }
 }

@@ -31,5 +31,9 @@
   "Role": {
     "dataSource": "db",
     "public": false
+  },
+  "Song": {
+    "dataSource": "mongo-server",
+    "public": true
   }
 }
