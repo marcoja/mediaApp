@@ -27,6 +27,6 @@ module.exports = function(Song) {
       {arg: 'items', type: 'number'},
       {arg: 'page', type: 'number'},
     ],
-    returns: {type: 'json', root: true},
+    returns: {type: 'array', root: true},
   });
 };

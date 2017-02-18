@@ -3,10 +3,11 @@ var chalk   = require('chalk');
 var fs      = require('fs');
 var request = require('request');
 
-var buildOptions = function(type, rawConfig, query, next) {
+//This method will build a final configuration object fot the http request
+//based on a given base configuration file.
+var buildOptions = function(type, config, query, next) {
   console.log(chalk.magenta('method: %s'), 'buildOptions');
-  var config = JSON.parse(rawConfig);
-
+  //Object to store the qs values for the http request.
   var qs = {
     method: type === 'byTrack' ? 'track.search' : 'tag.gettoptracks',
     format: config.format,
@@ -16,12 +17,33 @@ var buildOptions = function(type, rawConfig, query, next) {
   };
   if (type === 'byTrack') { qs.track = query.term; }
   if (type === 'byTag') { qs.tag = query.term; }
+  //Object with the valid http options
   var parsedConfig = {uri: config.uri, qs: qs};
   next(null, parsedConfig);
 };//buildOptions
 
-var buildResponse = function() {
+//This method will parse and format the final response based on the
+//http request results
+var buildResponse = function(rawResponse, next) {
   console.log(chalk.magenta('method: %s'), 'buildResponse');
+  var parsedResponse = [];
+  var tmpResponse    = JSON.parse(rawResponse);
+  var trackList = tmpResponse.results.trackmatches.track;
+  //this block of code will filter all songs that doesn't contain
+  //a valid value for the mbid field.
+  trackList.forEach(function(track, index) {
+    if (track.mbid) {
+      var tmp = {
+        name: track.name,
+        artist: track.artist,
+        mbid: track.mbid,
+        image: track.image,
+        youtubeid: null,
+      };
+      parsedResponse.push(tmp);
+    }//endOfFilter
+  });
+  next(null, trackList);
 };//buildResponse
 
 //This method will parse the intial query for the request
@@ -48,6 +70,7 @@ var parseQuery = function(query, next) {
   next(null, newQuery);
 };//parseQuery
 
+//This method will read the configuration file for the LASTFM api
 var readConfig = function(location, next) {
   console.log(chalk.magenta('method: %s'), 'readConfig');
   fs.readFile(location, 'utf8', function(error, baseConfig) {
@@ -62,24 +85,28 @@ var readConfig = function(location, next) {
       return next(err);
     }
     //handle success
-    next(null, baseConfig);
+    next(null, JSON.parse(baseConfig));
   });
 };
 
+//This method will query the lastFM api based on song name.
 var searchByTrack = function(requestOptions, next) {
   console.log(chalk.magenta('method: %s'), 'searchByTrack');
   request(requestOptions, function(error, request, response) {
-    //check for error
+     //check for error
     if (error) { return next(error); }
     //handle success
     next(null, response);
   });
 };//searchByTrack
 
+//This method will query the lastFM api base on tag metadata
 var searchByTag = function() {
   console.log(chalk.magenta('method: %s'), 'searchByTag');
 };//searchByTag
 
+//This method will execute the http request, it is a separated method because
+//at some point in time both searchByTag and async need to be implemented
 var makeRequest = function(config, query, next) {
   buildOptions('byTrack', config, query, function(error, parsedOptions) {
     //check for error
@@ -89,7 +116,12 @@ var makeRequest = function(config, query, next) {
       //check for error
       if (error) { next(error); }
       //handle success
-      next(null, response);
+      buildResponse(response, function(error, response) {
+        //check for error
+        if (error) { return next(error); }
+        //handle success
+        next(null, response);
+      });//buildResponse
     });//searchByTrack
   });//buildOptions
 };//makeRequest
@@ -113,9 +145,10 @@ var search = function(rawQuery, next) {
   });//readConfig
 };//search
 
+//Object to export the public available methods.
 var lastfm = {
   query: parseQuery,
   search: search,
 };
-
+//Methods available
 module.exports = lastfm;
