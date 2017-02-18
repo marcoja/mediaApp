@@ -2,11 +2,11 @@
 Exercise application for development with loopback, angular2 and mongodb
 
 
-Line **loopback api:**
-localhost:3000
+**loopback api:** <br />
+- localhost:3000
 
-Line **angular UI:**
-localhost:4200
+**angular UI:**<br />
+- localhost:4200
 
-Line **mongodb:**
-localhost:29000
+**mongodb:** <br />
+- localhost:29000
