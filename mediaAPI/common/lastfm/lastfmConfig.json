@@ -1,4 +1,5 @@
 {
   "uri":"http://ws.audioscrobbler.com/2.0/",
-  "key":"67de38081b635697705c614e0446209c"
+  "key":"67de38081b635697705c614e0446209c",
+  "format":"json"
 }

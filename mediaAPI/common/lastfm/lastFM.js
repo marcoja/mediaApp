@@ -3,8 +3,21 @@ var chalk   = require('chalk');
 var fs      = require('fs');
 var request = require('request');
 
-var buildOptions = function() {
+var buildOptions = function(type, rawConfig, query, next) {
   console.log(chalk.magenta('method: %s'), 'buildOptions');
+  var config = JSON.parse(rawConfig);
+
+  var qs = {
+    method: type === 'byTrack' ? 'track.search' : 'tag.gettoptracks',
+    format: config.format,
+    'api_key': config.key,
+    limit: query.items,
+    page: query.page,
+  };
+  if (type === 'byTrack') { qs.track = query.term; }
+  if (type === 'byTag') { qs.tag = query.term; }
+  var parsedConfig = {uri: config.uri, qs: qs};
+  next(null, parsedConfig);
 };//buildOptions
 
 var buildResponse = function() {
@@ -49,18 +62,37 @@ var readConfig = function(location, next) {
       return next(err);
     }
     //handle success
-    console.log(baseConfig);
     next(null, baseConfig);
   });
 };
 
-var searchByTrack = function() {
+var searchByTrack = function(requestOptions, next) {
   console.log(chalk.magenta('method: %s'), 'searchByTrack');
+  request(requestOptions, function(error, request, response) {
+    //check for error
+    if (error) { return next(error); }
+    //handle success
+    next(null, response);
+  });
 };//searchByTrack
 
 var searchByTag = function() {
   console.log(chalk.magenta('method: %s'), 'searchByTag');
 };//searchByTag
+
+var makeRequest = function(config, query, next) {
+  buildOptions('byTrack', config, query, function(error, parsedOptions) {
+    //check for error
+    if (error) { return next(error); }
+    //handle success
+    searchByTrack(parsedOptions, function(error, response) {
+      //check for error
+      if (error) { next(error); }
+      //handle success
+      next(null, response);
+    });//searchByTrack
+  });//buildOptions
+};//makeRequest
 
 //This method will perform a wide search "byTrack and ByTag" against the
 //lastFM api given a user provided search term
@@ -72,7 +104,12 @@ var search = function(rawQuery, next) {
     //check for error
     if (error) { return next(error); }
     //handle success
-    next(null, 'config is good!');
+    makeRequest(baseConfig, rawQuery, function(error, response) {
+      //check for error
+      if (error) { return next(error); }
+      //handle success
+      next(null, response);
+    });
   });//readConfig
 };//search
 
