@@ -1,7 +1,6 @@
 'use strict';
 
 var chalk   = require('chalk');
-var fs      = require('fs');
 var lastFM  = require('../lastfm/lastFM');
 
 module.exports = function(Song) {
@@ -12,7 +11,12 @@ module.exports = function(Song) {
       //check for error
       if (error) { return cb(error, null); }
       //handle success
-      cb(null, 'query is good!');
+      lastFM.search(parsedQuery, function(error, response) {
+        //check for error
+        if (error) { return cb(error, null); }
+        //handle success
+        cb(null, response);
+      });//search
     });//query
   };//Song.search
 
