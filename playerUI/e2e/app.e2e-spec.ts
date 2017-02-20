@@ -1,6 +1,6 @@
 import { PlayerUIPage } from './app.po';
 
-describe('player-ui App', function() {
+describe('player-ui App', () => {
   let page: PlayerUIPage;
 
   beforeEach(() => {
