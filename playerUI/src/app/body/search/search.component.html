@@ -1,0 +1,50 @@
+<div id="component-search">
+  <div id="search-box" class="row">
+    <div class="col-md-6">
+      <form #searchForm="ngForm" ngSubmit="search(searchTerm)" class="form-inline">
+        <div class="form-group">
+          <input
+            name="foo"
+            #searchValue="ngModel"
+            required
+            type="text"
+            class="form-control"
+            placeholder="Enter a search value ..."
+            [(ngModel)]="trackName"
+          />
+        </div><!--form-group-->
+        <button
+          type="button"
+          class="btn btn-default"
+          (click)="search(trackName)"
+          [disabled]="!searchForm.valid"
+        >
+          Search
+        </button>
+      </form>
+      <div *ngIf="searchValue.errors && (searchValue.dirty || searchValue.touched)"
+         class="alert alert-danger" style="clear:both;">
+         This field cannot be empty, please provide a valid value.
+      </div>
+    </div>
+  </div><!--search-box-->
+  <div id="results-box" class="row">
+    <div class="col-md-12 head">
+      <span class="single-line">
+        Results for: &nbsp;<span class="highlight1"> {{ searchTerm }}</span>
+      </span>
+    </div>
+    <div class="col-md-9 single-item">
+      <div class="row" *ngFor="let result of results">
+        <div class="col-md-12">
+          <ul class="thumbnail">
+            <li><img src="{{result.image[1]['#text']}}" alt="{{result.name}}" /></li>
+            <li>{{result.name}}</li>
+            <li>{{result.artist}}</li>
+          </ul>
+        </div>
+      </div>
+    </div><!--col-md-9-->
+    <div class="col-md-3">col-md-3</div>
+  </div><!--results-box-->
+</div>

@@ -1,0 +1,38 @@
+#component-search{
+  //background-color:purple;
+  [class*=col]{
+    //background-color:purple;
+    //margin-top: 2px;
+  }
+
+  .head{
+    //background-color:orange;
+    margin: 15px 0;
+  }
+
+  .alert{
+    margin:10px 0;
+    padding:5px;
+  }
+  .highlight1{ color:cornflowerblue; }
+  .single-line{display: flex;}
+
+  .single-item{
+    ul{
+      list-style: none;
+      display:inline-flex;
+      width: 100%;
+      li{
+
+      }
+    }
+  }//single-item
+
+  #search-box{
+    input[type="text"]{
+      width: 400px;
+      min-width: 200px;
+      margin-right: 5px;
+    }
+  }//search-box
+}//component-search
