@@ -10,7 +10,7 @@ import { SearchService } from './search.service';
 export class SearchComponent implements OnInit {
   trackName: string;
   searchTerm: string;
-  results: any;
+  songsList: any;
   constructor(private SearchService: SearchService) { }
 
   ngOnInit() {
@@ -20,7 +20,7 @@ export class SearchComponent implements OnInit {
     this.searchTerm = searchTerm;
     console.log('search clicked! - %s', searchTerm);
     this.SearchService.searchAPI(this.searchTerm).then((results) => {
-      this.results = results;
+      this.songsList = results;
       console.log( results );
     });
   }// search
