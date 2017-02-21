@@ -35,11 +35,12 @@
 
       <div id="song-list" class="col-sm-12 col-md-12">
         <div class="row" *ngFor="let song of songsList">
-          <div class="col-md-12">
+          <div class="col-md-12" [ngClass]="{smallScreen: smallScreen}">
             <div class="thumbnail">
               <div class="row">
                 <div class="col-sm-12 col-md-1">
-                  <img src="{{song.image[1]['#text']}}" alt="{{song.name}}" class="img-format"/>
+                  <!-- <img src="{{song.image[1]['#text']}}" alt="{{song.name}}" class="img-format"/> -->
+                  <img [src]="getImage(song)" alt="{{song.name}}"/>
                 </div>
                 <div class="col-sm-12 col-md-5">
                   <div class="col-wrapper">
@@ -52,8 +53,8 @@
                   </div>
 
                 </div>
-                <div class="col-sm-12 col-md-3 col-format">controls</div>
-              </div>
+                <button type="button" class="btn btn-default">test</button>
+              </div><!--row-->
             </div><!--thumbnail-->
           </div><!--col-->
         </div><!--row-->
