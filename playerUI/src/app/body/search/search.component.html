@@ -1,57 +1,66 @@
-<div id="component-search">
-  <div id="search-box" class="row">
-    <div class="col-md-6">
-      <form
-        #searchForm="ngForm"
-        (ngSubmit)="search(trackName)"
-        class="form-inline"
-      >
-        <div class="form-group">
-          <input
-            required
-            #searchTerm="ngModel"
-            name="searchTerm"
-            type="text"
-            value=""
-            placeholder="enter track/artist name ..."
-            class="form-control"
-            [(ngModel)]="trackName"
-          />
-          <button type="submit" class="btn btn-default">Search</button>
-        </div><!--form-gropup-->
-        <div
-          class="alert alert-danger error-box"
-          *ngIf="searchTerm.errors && (searchTerm.dirty || searchTerm.touched)"
-        >
-          Unable to search, please provide a search value.
-        </div>
-      </form>
-    </div><!--col-->
-  </div><!-- search-box -->
-  <div id="results-box" class="row">
-    <div id="sub-header" class="col-md-12">
-      <span class="innerRow">Results for: &nbsp;<span class="highlight1"> {{ trackName }} </span></span>
-    </div>
-    <div class="col-md-9 col-xs-12">
-      <div class="thumbnail" *ngFor="let song of songsList">
-        <ul>
-          <li class="size-10percent">
-            <img src="{{song.image[1]['#text']}}" alt="{{song.name}}" class="img-rounded" />
-          </li>
-          <li class="size-30percent liformat"><h4>Title:</h4>{{song.name}}</li>
-          <li class="size-30percent liformat"><h4>Artist:</h4>{{song.artist}}</li>
-
-          <li class="size-30percent">
-            <button type="button" class="btn btn-default btn-lg foo">
-              <span class="glyphicon glyphicon-play"></span>
-            </button>
-            <button type="button" class="btn btn-default btn-lg foo">
-              <span class="glyphicon glyphicon-floppy-disk"></span>
-            </button>
-          </li>
-        </ul>
+<div id="component-search" class="row">
+  <div class="col-sm-12 col-md-12 col-lg-9">
+    <div id="search-box" class="row master-row">
+    <form #searchForm="ngForm" (ngSubmit)="search(trackName)">
+      <div class="col-sm-12 col-md-9">
+        <input
+          required
+          type="text"
+          class="form-control"
+          placeholder="track/artis name ..."
+          name="searchTerm"
+          #searchTerm="ngModel"
+          [(ngModel)]="trackName"
+        />
       </div>
-    </div>
-    <div class="col-md-3">col-md-3</div>
-  </div><!-- results-box -->
+      <div class="col-sm-12 col-md-3">
+        <button type="submit" class="btn btn-default btn-block">Search</button>
+      </div>
+    </form>
+    </div><!--seaerch-box-->
+
+    <div id="error-box" class="row error-row">
+      <div class="col-sm-12 col-md-9" *ngIf="searchTerm.errors && (searchTerm.dirty || searchTerm.touched)">
+        <div class="alert alert-danger">
+          Unable to search, please provide a song/band name.
+        </div><!--alert-->
+      </div><!--col-->
+    </div><!--error-box-->
+
+    <div id="results-box" class="row master-row">
+
+      <div id="sub-header" class="col-sm-12 col-md-12">
+        <span>Results for: &nbsp;<b>demo</b></span>
+      </div><!--sub-header -->
+
+      <div id="song-list" class="col-sm-12 col-md-12">
+        <div class="row" *ngFor="let song of songsList">
+          <div class="col-md-12">
+            <div class="thumbnail">
+              <div class="row">
+                <div class="col-sm-12 col-md-1">
+                  <img src="{{song.image[1]['#text']}}" alt="{{song.name}}" class="img-format"/>
+                </div>
+                <div class="col-sm-12 col-md-5">
+                  <div class="col-wrapper">
+                    <h4>Title:</h4>{{song.name}}
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-3">
+                  <div class="col-wrapper">
+                    <h4>Artist:</h4>{{song.artist}}
+                  </div>
+
+                </div>
+                <div class="col-sm-12 col-md-3 col-format">controls</div>
+              </div>
+            </div><!--thumbnail-->
+          </div><!--col-->
+        </div><!--row-->
+      </div><!--song-list -->
+
+    </div><!--results-box-->
+
+  </div><!--left-box-->
+  <div class="col-md-3 visible-lg-block">right box</div><!--right-box-->
 </div>
