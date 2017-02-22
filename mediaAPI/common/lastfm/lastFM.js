@@ -32,7 +32,7 @@ var buildResponse = function(rawResponse, next) {
   //this block of code will filter all songs that doesn't contain
   //a valid value for the mbid field.
   trackList.forEach(function(track, index) {
-    if (track.mbid) {
+    if (track.mbid !== '') {
       var tmp = {
         name: track.name,
         artist: track.artist,
@@ -43,7 +43,7 @@ var buildResponse = function(rawResponse, next) {
       parsedResponse.push(tmp);
     }//endOfFilter
   });
-  next(null, trackList);
+  next(null, parsedResponse);
 };//buildResponse
 
 //This method will parse the intial query for the request
@@ -65,7 +65,7 @@ var parseQuery = function(query, next) {
   // handle success
   var newQuery = {};
   newQuery.term  = query.term;
-  newQuery.items = !query.items ? 15 : query.items;
+  newQuery.items = !query.items ? 50 : query.items;
   newQuery.opage = !query.page ? 1 : query.page;
   next(null, newQuery);
 };//parseQuery
