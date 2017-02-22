@@ -17,11 +17,13 @@ export class SearchComponent implements OnInit {
   test: any;
   imageSize: number;
   smallScreen: boolean;
+  resultsFlag: boolean;
   constructor(private SearchService: SearchService) { }
 
   ngOnInit() {
-    console.log('debugging:');
-    console.log(window.innerWidth);
+    // console.log('debugging:');
+    // console.log(window.innerWidth);
+    this.resultsFlag = false;
     this.setScreen(window.innerWidth);
   }
 
@@ -43,6 +45,7 @@ export class SearchComponent implements OnInit {
     console.log('search clicked! - %s', searchTerm);
     this.SearchService.searchAPI(this.searchTerm).then((results) => {
       this.songsList = results;
+      this.resultsFlag = true;
     });
   }// search
 }// searchComponent

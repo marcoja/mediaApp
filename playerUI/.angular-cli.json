@@ -20,12 +20,16 @@
       "prefix": "app",
       "styles": [
         "../node_modules/bootstrap/dist/css/bootstrap.css",
+        "../node_modules/font-awesome/scss/font-awesome.scss",
         "styles.scss"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",
         "../node_modules/tether/dist/js/tether.js",
         "../node_modules/bootstrap/dist/js/bootstrap.js"
+      ],
+      "addons":[
+        "../node_modules/font-awesome/fonts/*.+(otf|eot|svg|ttf|woff|woff2)" 
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

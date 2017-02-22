@@ -1,15 +1,10 @@
 #component-search{
-  //@media screen and (min-width: 780px) {
-  //  background-color:orange;
-  //}
 
-  .master-row{
-    //background-color:orange;
-    margin-bottom:10px;
-  }
 
-  .error-row{
-    margin-bottom:10px;
+
+  .spinner{
+    font-size: 3em;
+    text-align: center;;
   }
 
   #search-box{
@@ -19,54 +14,88 @@
   }//search-box
 
   #results-box{
-    #sub-header{
+    margin-top:15px;
+    //margin-bottom: 10px;
+    .row{
       margin-bottom:10px;
+    }
+    #sub-header{
       span{
-        display:flex;
-        padding:8px;
+        display: flex;
         background-color:#F0F0F0;
-        //border:1px solid #ddd;
-        border-radius: 4px;
-        b{
-          color:cornflowerblue;
-          font-weight: normal;
-        }
+        padding: 6px 4px;
       }//span
+      b{ color:cornflowerblue; font-weight: normal;}
     }//sub-header
-    .thumbnail{
-      padding:0;
-      h4{
-        font-size:1em;
-        margin:0;
-        padding:0;
-      }
-      img{
-        border-radius: 4px 0px 0px 4px;
-      }
-      .col-wrapper{
-        padding:4px;
-      }
-    }
-    .foo{
-      display:block;
-      height:100%;
-    }
-    .smallScreen{
+
+    #songList{
       .thumbnail{
+        margin-bottom:15px;
+      }
+
+      .thumbnail.big{
+        //background-color: orange;
         img{
-          border-radius: 4px 4px 0px 0px;
+          float:left;
+          border-radius: 4px 0px 0px 4px;
+          margin-right:10px;
+        }//img
+        .wrapper{
+          float:left;
+          margin-right:5px;
+          min-width: 300px;
+          h1, h2{
+            font-weight: normal;
+            margin:0 0 5px 0 ;
+            padding:0;
+            font-size: 1em;
+          }//h1,h2
+          h1{color:#bbb;}
+          h2{max-width: 290px;}
+        }//wrapper
+         button{
+           display:inline-block;
+           height: inherit;
+           float:right;
+           height: 64px;
+           margin-left: 5px;
+         }
+      }//big
+
+      .thumbnail.small{
+        //background-color: cornflowerblue;
+        img{
           width: 100%;
+          border-radius: 4px 4px 0px 0px;
+          margin-bottom:10px;
+        }//image
+        .wrapper{
+          h1, h2{
+            font-weight: normal;
+            margin:0 0 5px 0 ;
+            padding:0;
+            font-size: 1em;
+          }//h4
+          h1{color:#bbb;}
+          h2{font-size:1.5em;}
+        }//wrapper
+        button{
+          display:block;
+          width: 100%;
+          margin-bottom: 10px;
         }
-      }//thumbnail
-    }//smallScreem
+      }//small
+    }//songList
 
   }//results-box
 
   #error-box{
+    margin: 5px 0px;
     .alert{
       padding:4px;
       margin:0;
     }
   }
+
 
 }//component-search
