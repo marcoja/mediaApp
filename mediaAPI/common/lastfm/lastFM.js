@@ -38,6 +38,7 @@ var buildResponse = function(rawResponse, next) {
         artist: track.artist,
         mbid: track.mbid,
         image: track.image,
+        duration: null,
         youtubeid: null,
       };
       parsedResponse.push(tmp);
