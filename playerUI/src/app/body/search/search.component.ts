@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { SearchService } from './search.service';
 import { HostListener } from '@angular/core';
+import { SearchService } from './search.service';
+import { SaveSongService } from '../save-song.service';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
-  providers: [SearchService],
+  providers: [SearchService, SaveSongService],
 })
 
 
@@ -20,13 +21,19 @@ export class SearchComponent implements OnInit {
   smallScreen: boolean;
   resultsFlag: boolean;
   showSpinner: boolean;
-  constructor(private SearchService: SearchService) { }
+
+  constructor(
+    private SearchService: SearchService,
+    private SaveSongService: SaveSongService
+  ) {
+    this.resultsFlag = false;
+    this.showSpinner = false;
+  }
 
   ngOnInit() {
     // console.log('debugging:');
     // console.log(window.innerWidth);
-    this.resultsFlag = false;
-    this.showSpinner = false;
+
     this.setScreen(window.innerWidth);
   }
 
@@ -54,4 +61,12 @@ export class SearchComponent implements OnInit {
       this.resultsFlag = true;
     });
   }// search
+
+  save(song): void {
+    console.log('saving song ...');
+    console.log(song);
+    /*this.SaveSongService.saveNewSong(song).then((results) => {
+      console.log(results);
+    });*/
+  }
 }// searchComponent
