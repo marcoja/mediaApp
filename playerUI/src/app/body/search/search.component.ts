@@ -18,12 +18,14 @@ export class SearchComponent implements OnInit {
   imageSize: number;
   smallScreen: boolean;
   resultsFlag: boolean;
+  showSpinner: boolean;
   constructor(private SearchService: SearchService) { }
 
   ngOnInit() {
     // console.log('debugging:');
     // console.log(window.innerWidth);
     this.resultsFlag = false;
+    this.showSpinner = false;
     this.setScreen(window.innerWidth);
   }
 
@@ -41,10 +43,12 @@ export class SearchComponent implements OnInit {
     return song.image[this.imageSize]['#text'];
   }
   search(searchTerm): void {
+    this.showSpinner = true;
     this.searchTerm = searchTerm;
     console.log('search clicked! - %s', searchTerm);
     this.SearchService.searchAPI(this.searchTerm).then((results) => {
       this.songsList = results;
+      this.showSpinner = false;
       this.resultsFlag = true;
     });
   }// search
