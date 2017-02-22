@@ -13,6 +13,7 @@ import { HostListener } from '@angular/core';
 export class SearchComponent implements OnInit {
   trackName: string;
   searchTerm: string;
+  term: string;
   songsList: any;
   test: any;
   imageSize: number;
@@ -44,6 +45,7 @@ export class SearchComponent implements OnInit {
   }
   search(searchTerm): void {
     this.showSpinner = true;
+    this.term = searchTerm;
     this.searchTerm = searchTerm;
     console.log('search clicked! - %s', searchTerm);
     this.SearchService.searchAPI(this.searchTerm).then((results) => {

@@ -41,14 +41,14 @@
 
       <div id="sub-header" class="row">
         <div class="col-md-12">
-          <span>Results for: &nbsp;<b>{{trackName}}</b></span>
+          <span>Results for: &nbsp;<b>{{term}}</b></span>
         </div>
       </div><!--subheader-->
       <div id="songList" class="row">
         <div class="col-md-12 " *ngFor="let song of songsList">
           <div class="thumbnail clearfix" [ngClass]="(smallScreen)?'small':'big'">
-            <img [src]="getImage(song)" alt="{{ song.name }}" class="img-responsive"/>
-            <div class="wrapper">
+            <img [src]="getImage(song)" alt="{{ song.name }}" class="img-responsive" [ngClass]="{'img-thumbnail': true}"/>
+            <div class="wrapper wrapper-width">
               <h1>Title</h1>
               <h2>{{song.name}}</h2>
             </div>
@@ -58,7 +58,6 @@
             </div>
             <button type="button" class="btn btn-default">play</button>
             <button type="button" class="btn btn-default">save</button>
-
           </div><!--thumbnail-->
         </div><!--col-->
       </div><!--song-list-->
